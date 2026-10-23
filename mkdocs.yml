@@ -1,0 +1,67 @@
+site_name: TerraWatch Rwanda Technical Documentation
+site_description: Technical documentation for TerraWatch Rwanda, a landslide-risk intelligence platform for disaster-management decision support.
+site_author: TerraWatch Rwanda Team
+
+theme:
+  name: material
+  language: en
+  logo: assets/images/terrawatch-logo.png
+  favicon: assets/images/terrawatch-favicon.png
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+    - content.code.copy
+    - search.suggest
+    - search.highlight
+    - content.zoom
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom-primary
+      accent: custom-accent
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom-primary
+      accent: custom-accent
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font:
+    text: Roboto
+    code: Roboto Mono
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.tabbed
+
+plugins:
+  - search
+
+extra_css:
+  - assets/stylesheets/extra.css
+
+nav:
+  - Home: index.md
+  - Overview: overview.md
+  - Architecture: architecture.md
+  - Data Pipelines: data-pipelines.md
+  - AI Risk Assessment: ai-risk-assessment.md
+  - Analyst Workspace: analyst-workspace.md
+  - Security & Compliance: security-compliance.md
+  - Glossary: glossary.md
