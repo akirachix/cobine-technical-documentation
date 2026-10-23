@@ -13,7 +13,7 @@
 
 ## Dashboard
 
-[![TerraWatch analyst dashboard design](assets/images/terrawatch-design-dashboard.png)](assets/images/terrawatch-design-dashboard.png){ target="_blank" title="Open the full-size design" }
+[![TerraWatch analyst dashboard design](assets/images/terrawatch-analyst-dashboard.png)](assets/images/terrawatch-analyst-dashboard.png){ target="_blank" title="Open the full-size design" }
 
 The dashboard brings together the four parts of the workspace:
 
