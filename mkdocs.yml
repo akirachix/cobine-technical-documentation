@@ -64,4 +64,15 @@ nav:
   - AI Risk Assessment: ai-risk-assessment.md
   - Analyst Workspace: analyst-workspace.md
   - Security & Compliance: security-compliance.md
-  - Glossary: glossary.md
+  
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.tabbed

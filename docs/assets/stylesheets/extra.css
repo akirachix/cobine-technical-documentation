@@ -617,3 +617,79 @@ body {
 .md-typeset td {
   border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
 }
+
+/* Architecture diagrams */
+.architecture-diagram {
+  margin: 1.5rem 0 2rem;
+  padding: 1rem;
+  background: var(--md-code-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.65rem;
+  text-align: center;
+}
+
+.architecture-diagram a {
+  display: block;
+}
+
+.architecture-diagram img {
+  display: block;
+  width: 100%;
+  max-width: 1000px;
+  max-height: 700px;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.architecture-caption {
+  margin: 0.85rem 0 0;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+@media screen and (max-width: 700px) {
+  .architecture-diagram {
+    padding: 0.5rem;
+  }
+}
+
+/* TerraWatch data-pipeline cards */
+.md-typeset .grid.cards > ul,
+.md-typeset .grid.cards > ol {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.md-typeset .grid.cards > ul > li,
+.md-typeset .grid.cards > ol > li {
+  display: block;
+  margin: 0;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(247, 147, 30, 0.22);
+  border-left: 3px solid #163B32;
+  border-radius: 0.65rem;
+  background: var(--md-code-bg-color);
+  box-shadow: none;
+}
+
+.md-typeset .grid.cards > ul > li:hover,
+.md-typeset .grid.cards > ol > li:hover {
+  border-left-color: #F7931E;
+}
+
+.md-typeset .grid.cards > ul > li > hr,
+.md-typeset .grid.cards > ol > li > hr {
+  margin: 0.65rem 0;
+}
+
+@media screen and (max-width: 600px) {
+  .md-typeset .grid.cards > ul,
+  .md-typeset .grid.cards > ol {
+    grid-template-columns: 1fr;
+  }
+}
+
