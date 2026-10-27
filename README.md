@@ -44,6 +44,7 @@ terrawatch-rwanda-docs/
 │   ├── ai-risk-assessment.md # ML models and risk scoring (to be documented)
 │   ├── analyst-workspace.md  # Workspace UI and workflows (to be documented)
 │   ├── security-compliance.md # Security and compliance (to be documented)
+│   ├── glossary.md           # Domain terms and acronyms
 │   └── assets/
 │       ├── images/           # Logos, diagrams, screenshots
 │       └── stylesheets/
