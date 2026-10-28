@@ -1,8 +1,10 @@
 # TerraWatch Rwanda - Technical Documentation
 
-**Technical documentation for TerraWatch Rwanda, a landslide-risk decision-support platform for disaster-management teams.**
+**Landslide-risk intelligence platform for disaster-management decision support in Rwanda.**
 
-TerraWatch brings rainfall information, sector-level risk estimates, and analyst workflow tools together to support informed decisions. The application is maintained in the [backend](https://github.com/akirachix/codebine-backend) and [frontend](https://github.com/akirachix/cobine-frontend) repositories; this repository contains the documentation site.
+TerraWatch Rwanda is a geospatial intelligence platform that continuously monitors environmental conditions across Rwanda to identify areas showing elevated landslide risk. Built for disaster-management analysts at MINEMA and district-level offices, the platform bridges the gap between fragmented environmental data sources and actionable, geographically specific decision-making.
+
+This repository contains the documentation site. The application is maintained in the [backend](https://github.com/akirachix/codebine-backend) and [frontend](https://github.com/akirachix/cobine-frontend) repositories.
 
 Start with the [platform overview](docs/overview.md), explore the [system architecture](docs/architecture.md), or jump to the [developer guide](docs/developer-guide.md).
 
@@ -81,7 +83,7 @@ mkdocs serve
 
 The site will be available at `http://localhost:8000`.
 
-### Build the Site
+### Build for Production
 
 ```bash
 mkdocs build --strict
@@ -107,11 +109,12 @@ The backend repository includes a Heroku deployment workflow. Application releas
 
 ## Target Users
 
-| User | Role |
-|---|---|
-| **MINEMA Analysts** | Review risk estimates, alerts, and incidents |
-| **District Disaster-Management Teams** | Use sector information to support local coordination |
-| **System Administrators** | Manage users and platform operations |
+| User | Role | Engagement |
+|---|---|---|
+| **Disaster Management Analysts (MINEMA)** | Review and investigate risk assessments | Requires geographic dashboard and evidence visualization |
+| **District Disaster Offices** | Local risk monitoring | Requires district-level visibility |
+| **Meteo Rwanda** | Weather data provider | Provides rainfall information used by the system |
+| **System Administrators** | Manage platform operations | Requires RBAC and monitoring |
 
 ---
 

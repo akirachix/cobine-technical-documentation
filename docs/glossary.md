@@ -22,6 +22,7 @@ A reference for acronyms and domain terms used throughout the TerraWatch Rwanda 
 | **OWASP** | Open Worldwide Application Security Project | A nonprofit foundation that produces security checklists and tools; the API security testing follows the OWASP API Security Top 10. |
 | **REST / RESTful** | Representational State Transfer | An architectural style for designing networked applications; the platform exposes RESTful API endpoints. |
 | **RBAC** | Role-Based Access Control | A permission model where access rights are assigned to users based on their role within the organization. |
+| **S3** | Simple Storage Service | Amazon's object storage service used for storing incoming CHIRPS rainfall data and other assets. |
 | **TLS** | Transport Layer Security | A cryptographic protocol used to secure communications over a network; all HTTPS traffic uses TLS. |
 
 ---
@@ -32,7 +33,6 @@ A reference for acronyms and domain terms used throughout the TerraWatch Rwanda 
 |---|---|
 | **Alert** | A notification generated when a sector's risk exceeds a predefined threshold (HIGH or EXTREME). Alerts appear in the Analyst Workspace review queue. |
 | **Analyst** | A disaster-management analyst, typically from MINEMA, who reviews risk estimates, investigates alerts, makes decisions, and logs field incidents. |
-| **Confidence Score** | A numerical or categorical value indicating how certain the ML model is about its risk classification for a given sector. |
 | **Confidence** | A measure of certainty or evidence quality. TerraWatch's probability score represents estimated landslide risk, not a separate confidence measure. |
 | **Critical** | Alert severity assigned by the backend to an `EXTREME` risk inference. It is not a fifth risk-level tier. |
 | **District** | An administrative division in Rwanda; districts contain multiple sectors. |
