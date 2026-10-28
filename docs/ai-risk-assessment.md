@@ -116,7 +116,7 @@ The score represents the model's estimated probability of landslide occurrence. 
 
 ## Model Evaluation
 
-The project evaluation uses a temporal split, with training records before 2022 and test records from 2022 onward. The recorded training set contains 442 landslide samples and 884 sampled non-landslide records.
+The evaluation notebook, `logistic_regressor_training.ipynb`, combines rainfall, landslide inventory, land-cover, and sector terrain inputs to build 1,326 labeled samples: 442 landslide samples and 884 sampled non-landslide samples. It uses a temporal split at 2022-01-01: 1,023 training rows from before that date and 303 test rows from that date onward. The notebook's feature set includes month, the 1-, 3-, 7-, 10-, and 30-day rainfall windows, mean slope, and land-cover class.
 
 | Test-set measure | Recorded result |
 | :--- | :--- |
@@ -126,4 +126,8 @@ The project evaluation uses a temporal split, with training records before 2022 
 | Precision (landslide) | 0.61 |
 | Recall (landslide) | 0.46 |
 
-These figures describe that evaluation run; they are not a guarantee of performance in every sector or season. Model results work best as one part of an analyst's assessment alongside current conditions and local knowledge.
+The figures above are the saved output of that notebook. The training workspace also contains the input files `TerraWatch_Sector_Rainfall_Matrix.csv`, `rwanda_minema_landslide_inventory_clean.csv`, and `LULC_TABLE_2017_2022.csv`, as well as `train_logistic_regression.py` and `train_rainfall_only.py`. These files are in the separate `chirps-historical-rainfall-datasets` workspace and are not included in this documentation-site repository.
+
+The supplied performance image is a separate metrics snapshot. Its confusion matrix shows 118 true negatives, 40 false positives, 84 false negatives, and 61 true positives; from those counts, accuracy is 59.1%, precision 60.4%, recall 42.1%, and F1 49.6%. The plots report ROC AUC about 0.721 and average precision about 0.69. These threshold metrics differ from the notebook output above, so the image and notebook results should be treated as separate evaluation snapshots rather than combined into one result.
+
+[![Logistic Regression performance plots showing a confusion matrix, ROC and precision-recall curves, predicted-probability distribution, feature coefficients, and threshold metrics.](assets/images/logistic-regression-performance.png)](assets/images/logistic-regression-performance.png){ target="_blank" title="Open the full-size image" }

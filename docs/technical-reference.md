@@ -35,7 +35,7 @@ The [Data Pipelines](data-pipelines.md), [AI Risk Assessment](ai-risk-assessment
 | `/analytics/` | Model versions, predictions, and feature snapshots. |
 | `/audit-logs/` | Audit records. |
 
-The model prediction route is `POST /analytics/models/{model_version_id}/predict-from-rainfall`. See the [prediction example](ai-risk-assessment.md#how-a-prediction-is-made) and [API reference](analyst-workspace.md#api-reference).
+The model prediction route is `POST /analytics/models/{model_version_id}/predict-from-rainfall`. Browse the [hosted interactive API reference](https://terrawatch2-9d926d327adb.herokuapp.com/docs) for the deployed API. See the [prediction example](ai-risk-assessment.md#how-a-prediction-is-made) and [selected workflow endpoints](analyst-workspace.md#selected-workflow-endpoints).
 
 ## Application Repositories
 

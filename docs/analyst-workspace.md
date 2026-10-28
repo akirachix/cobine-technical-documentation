@@ -164,9 +164,9 @@ Analysts can record field-reported landslides. These reports are operational inc
 
 ---
 
-## API Reference
+## Selected Workflow Endpoints
 
-The API groups routes by workflow: resource routes use `/api/v1`, model and inference routes use `/analytics`, and sign-in routes use `/auth`. See [Security & Compliance](security-compliance.md) for user roles and account access.
+This is a selected workflow reference, not a complete API catalogue. The API groups routes by workflow: resource routes use `/api/v1`, model and inference routes use `/analytics`, and sign-in routes use `/auth`. Browse the [hosted interactive API reference](https://terrawatch2-9d926d327adb.herokuapp.com/docs) for the deployed API's operations and schemas. When developing locally, use `http://127.0.0.1:8000/docs`. See [Security & Compliance](security-compliance.md) for user roles and account access.
 
 | Method | Endpoint | Purpose |
 | :--- | :--- | :--- |
