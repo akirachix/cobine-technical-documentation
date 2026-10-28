@@ -15,6 +15,7 @@ TerraWatch brings together a [FastAPI backend](https://github.com/akirachix/code
 - Google Earth Engine access when working with CHIRPS rainfall synchronization
 
 Keep local credentials in your environment or an untracked local configuration file.
+For backend settings, consult the backend [`env.example`](https://github.com/akirachix/codebine-backend/blob/0fbb5a043f6d389fee865f19592bc1ade63e7372/env.example) and the configuration code. 
 
 ## Run the Backend
 
@@ -25,7 +26,7 @@ uv venv
 uv pip install -r pyproject.toml --group dev
 ```
 
-Set the database and authentication settings for your local environment. To work with rainfall synchronization, configure the Google Earth Engine credentials and CHIRPS settings as well.
+Start or provision a PostgreSQL instance and create a database/user accessible to the application. Set `DATABASE_URL` to that database in the backend's `.env` file; the backend reads this variable when creating its database connection. The backend also loads settings from `.env`, so configure any additional settings required by the feature you are running. To work with rainfall synchronization, configure the Google Earth Engine credentials and CHIRPS settings as well. Keep private keys and provider credentials out of source control and browser-facing variables. See the backend [database connection](https://github.com/akirachix/codebine-backend/blob/0fbb5a043f6d389fee865f19592bc1ade63e7372/database.py) and [settings configuration](https://github.com/akirachix/codebine-backend/blob/0fbb5a043f6d389fee865f19592bc1ade63e7372/config.py).
 
 Create or update the database, then start the API:
 
@@ -77,7 +78,7 @@ The backend groups routes by feature:
 | `/analytics/...` | Model versions, predictions, and feature snapshots |
 | `/audit-logs/...` | Audit records |
 
-The frontend forwards `/auth/...` and `/api/v1/...` through its Next.js rewrites. For endpoint details, see the [Analyst Workspace API reference](analyst-workspace.md#api-reference).
+The frontend forwards `/auth/...` and `/api/v1/...` through its Next.js rewrites. The [Analyst Workspace API reference](analyst-workspace.md#selected-workflow-endpoints) is a selected workflow summary, not a complete endpoint or authorization catalogue. Use the [hosted interactive API reference](https://terrawatch2-9d926d327adb.herokuapp.com/docs) to browse the deployed API. When the backend is running locally, use `http://127.0.0.1:8000/docs`.
 
 ## Build the Documentation
 

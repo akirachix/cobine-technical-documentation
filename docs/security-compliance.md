@@ -101,6 +101,8 @@ Production environments should protect connections and stored data, restrict acc
 
 These are deployment responsibilities as well as application concerns. Set them for the environment where TerraWatch will operate and verify them as part of release readiness.
 
+The security architecture diagram is a target design, not an inventory of controls verified in a deployed environment. The application code provides account authentication, password hashing, role checks on protected operations, request schemas, and audit records. Infrastructure protections such as a WAF/CDN, database encryption at rest, PostgreSQL row-level security, and tested backups must be verified separately for each deployment.
+
 ---
 
 ## Privacy and Compliance

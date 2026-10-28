@@ -14,16 +14,15 @@ A reference for acronyms and domain terms used throughout the TerraWatch Rwanda 
 
 | Acronym | Full Form | Description |
 |---|---|---|
-| **API** | Application Programming Interface | RESTful endpoints under `/api/v1` that connect the frontend, model outputs, and persistent storage. |
+| **API** | Application Programming Interface | HTTP endpoints exposed by the FastAPI backend, including resource routes under `/api/v1/` and routes under `/auth/` and `/analytics/`. |
 | **CHIRPS** | Climate Hazards Group InfraRed Precipitation with Station | Near real-time rainfall dataset used as the primary precipitation feed. |
 | **GIS** | Geographic Information System | Systems and tools used for capturing, storing, checking, and displaying spatial data. |
-| **HTTPS** | HyperText Transfer Protocol Secure | The secure version of HTTP, used for all traffic between clients and the platform. |
+| **HTTPS** | HyperText Transfer Protocol Secure | HTTP carried over TLS. Whether all connections use HTTPS depends on the deployment configuration. |
 | **MINEMA** | Ministry in Charge of Emergency Management (Rwanda) | The institution identified in the project materials as the primary disaster-management stakeholder. |
-| **OWASP** | Open Worldwide Application Security Project | A nonprofit foundation that produces security checklists and tools; the API security testing follows the OWASP API Security Top 10. |
+| **OWASP** | Open Worldwide Application Security Project | An organization that publishes application-security resources, including the OWASP API Security Top 10. |
 | **REST / RESTful** | Representational State Transfer | An architectural style for designing networked applications; the platform exposes RESTful API endpoints. |
 | **RBAC** | Role-Based Access Control | A permission model where access rights are assigned to users based on their role within the organization. |
-| **S3** | Simple Storage Service | Amazon's object storage service used for storing incoming CHIRPS rainfall data and other assets. |
-| **TLS** | Transport Layer Security | A cryptographic protocol used to secure communications over a network; all HTTPS traffic uses TLS. |
+| **TLS** | Transport Layer Security | A cryptographic protocol that can secure communications over a network; deployment configuration determines where it is used. |
 
 ---
 
@@ -44,4 +43,4 @@ A reference for acronyms and domain terms used throughout the TerraWatch Rwanda 
 | **Model** | A serialized estimator registered through a model-version record. The backend inference service calls `predict_proba`; the exact estimator type and training lineage must be confirmed for each artifact. |
 | **Risk Assessment** | The process of calculating a probability-based `risk_score` and mapping it to LOW, MODERATE, HIGH, or EXTREME for a sector. |
 | **Sector** | The smallest administrative division in Rwanda used by TerraWatch for landslide risk monitoring. |
-| **Trace** | To trace the origin and decision path of a risk estimate; the audit trail maintains a complete record for accountability. |
+| **Trace** | To follow the origin and decision path of a risk estimate; TerraWatch records selected workflow activity to support follow-up. |

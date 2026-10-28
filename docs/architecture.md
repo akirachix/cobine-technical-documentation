@@ -154,13 +154,13 @@ hide:
   </a>
 </div>
 
-*Figure 2. TerraWatch security design, showing the intended account, application, and data layers. See [Security & Compliance](security-compliance.md) for account controls and deployment practices.*
+*Figure 2. Target security design showing proposed account, application, and data layers. See [Security & Compliance](security-compliance.md) for verified application controls and deployment responsibilities.*
 
 Authentication, role permissions, and activity records support the analyst workflow. See [Security & Compliance](security-compliance.md) for account controls and deployment practices.
 
 ## Service Routes
 
-The API groups operational resources under `/api/v1/`, authentication and users under `/auth/` and `/users/`, model and inference operations under `/analytics/`, and audit records under `/audit-logs/`. See the [API reference](analyst-workspace.md#api-reference) for endpoints and the [Technical Reference](technical-reference.md) for code links.
+The API groups operational resources under `/api/v1/`, authentication and users under `/auth/` and `/users/`, model and inference operations under `/analytics/`, and audit records under `/audit-logs/`. Browse the [hosted interactive API reference](https://terrawatch2-9d926d327adb.herokuapp.com/docs) for the deployed API. See the [selected workflow endpoints](analyst-workspace.md#selected-workflow-endpoints) and the [Technical Reference](technical-reference.md) for code links.
 
 ---
 
