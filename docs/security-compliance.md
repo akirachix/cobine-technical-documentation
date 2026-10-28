@@ -18,11 +18,11 @@ hide:
 # Security & Compliance
 
 <p class="tw-lead-text">
-  TerraWatch Rwanda handles institutional accounts, landslide risk outputs and analyst decisions. A compromised account or a changed risk record could lead to a wrong decision during an emergency, so security is built into every layer of the platform: the dashboard, the API, the database and the hosting environment.
+  TerraWatch supports institutional work with user accounts, risk estimates, and analyst decisions. Good security protects that work and the people who rely on it—from sign-in through data storage and deployment.
 </p>
 
 <div class="tw-callout-panel">
-  This page follows the Codebine Security Requirements. Each control is marked <strong>In place</strong> when it already exists in the code, or <strong>Planned</strong> when it is agreed and being built.
+  Predictions support human decision-making. Analysts review alerts; official warnings and response decisions remain with the responsible authorities.
 </div>
 
 ---
@@ -31,28 +31,24 @@ hide:
 
 <div class="tw-feature-microgrid">
   <div class="tw-feature-card">
-    <strong>🔐 Authentication</strong>
-    <span>Individual institutional accounts, Argon2id password hashing and multi-factor authentication for administrators.</span>
+    <strong>🔐 Account Access</strong>
+    <span>Password hashing, email verification codes, and signed access tokens help protect user accounts.</span>
   </div>
   <div class="tw-feature-card">
-    <strong>🛡️ Authorization</strong>
-    <span>Role-based access control on every request, with access denied by default.</span>
+    <strong>🛡️ User Roles</strong>
+    <span>Administrator and analyst roles organize access to platform operations.</span>
   </div>
   <div class="tw-feature-card">
-    <strong>✅ Input Validation</strong>
-    <span>Every request is checked on the server, and unknown fields are rejected.</span>
+    <strong>✅ Request Validation</strong>
+    <span>API schemas define the information each operation can accept.</span>
   </div>
   <div class="tw-feature-card">
-    <strong>🔒 Data Protection</strong>
-    <span>HTTPS for all traffic, encryption at rest and secrets kept out of the code.</span>
+    <strong>📜 Activity Records</strong>
+    <span>Key alert, review, and incident actions are recorded to support traceability.</span>
   </div>
   <div class="tw-feature-card">
-    <strong>📜 Audit Trail</strong>
-    <span>Every alert, review, incident and rainfall sync records who did what, and when.</span>
-  </div>
-  <div class="tw-feature-card">
-    <strong>👤 Human Decisions</strong>
-    <span>The model produces risk estimates; only an analyst can approve an alert.</span>
+    <strong>👤 Human Review</strong>
+    <span>Risk estimates enter an analyst workflow rather than making public decisions automatically.</span>
   </div>
 </div>
 
@@ -60,106 +56,68 @@ hide:
 
 ## User Roles
 
-TerraWatch is an institutional platform with no public or community accounts. An administrator onboards analysts; users cannot register themselves.
-
 | Role | Responsibilities |
-| :--- | :--- |
-| **System Administrator** | Onboards analysts, suspends or reactivates accounts, and manages model and threshold settings. |
-| **MINEMA Analyst** | Views the risk map, reviews alerts and predictions, and logs field incident reports. |
+|---|---|
+| **System Administrator** | Manage user accounts and administrative operations. |
+| **MINEMA Analyst** | Review risk estimates and alerts, record decisions, and report incidents. |
 
-Each user is stored in the `users` table with a role (`ADMIN` or `ANALYST`) and an account status (`ACTIVE` or `SUSPENDED`).
-
----
-
-## Security Controls
-
-### Authentication and Sessions
-
-| Control | Implementation | Status |
-| :--- | :--- | :--- |
-| Individual accounts | One account per person with email and password; no shared accounts. | In place |
-| Suspended accounts | A suspended user is refused by the API. | In place |
-| Password storage | Argon2id hashes only, with a minimum length of 12 characters. | Planned |
-| Multi-factor authentication | Required for administrators and other privileged accounts. | Planned |
-| Brute-force protection | Login attempts are rate-limited and the account is locked for 15 minutes after repeated failures. | Planned |
-| Login token | Protected endpoints require a JWT signed with RS256; the token holds no sensitive data. | Planned |
-| Session expiry | Sessions expire after inactivity, end when the browser closes, and are cancelled on logout. | Planned |
-
-### Authorization
-
-| Control | Implementation | Status |
-| :--- | :--- | :--- |
-| Server-owned fields | `reported_by`, `reviewed_by`, `reported_at` and `reviewed_at` are set by the server. A request that sends them is rejected. | In place |
-| Role-based access control | Permissions are checked on every request in the FastAPI backend, and access is denied by default. | Planned |
-| Object-level checks | Users can open only the records their role allows, backed by PostgreSQL Row-Level Security. | Planned |
-
-### API and Data Protection
-
-| Control | Implementation | Status |
-| :--- | :--- | :--- |
-| Input validation | Pydantic checks the type, format and range of every request; unknown fields return HTTP 422. | In place |
-| Business rules | Rules such as "an event date cannot be in the future" are enforced on the server, not only in the browser. | In place |
-| SQL injection protection | All database access uses SQLAlchemy with bound parameters. | In place |
-| Data checks | Rainfall cannot be negative and duplicate readings are not stored. | In place |
-| Secrets management | Database URLs and Earth Engine keys live in server environment variables and are never committed to Git. | In place |
-| Encryption in transit | All traffic uses HTTPS with TLS. | In place |
-| Generic errors | Users see short messages; keys, tokens, stack traces and database details are never returned. | In place |
-| Rate limiting | Login attempts and API calls per user per hour are limited. | Planned |
-| Encryption at rest | The PostgreSQL database and its backups are encrypted with AES-256. | Planned |
-| Backups | Encrypted daily backups are kept for 30 days, with a copy at a second Rwanda-based site. | Planned |
+Users sign in with an institutional account; the platform does not provide public self-registration.
 
 ---
 
-## Audit Trail
+## Sign-in and Sessions
 
-Important actions are recorded in the `system_audit_logs` table so the team can always answer **who did what, and when**.
+TerraWatch protects passwords with a dedicated password-hashing library. After password verification, sign-in uses a one-time email code before issuing signed JWT access and refresh tokens.
 
-| Action | Audit entry |
-| :--- | :--- |
-| An alert is raised from a high-risk prediction | `EMERGENCY_ALERT_CREATED` |
-| An analyst records a decision on an alert or prediction | `RISK_REVIEW_CREATED`, with the reviewer and the decision |
-| An analyst logs a field incident | `INCIDENT_REPORT_CREATED` |
-| Rainfall data is synced from CHIRPS | A rainfall sync entry |
+| Control | Behavior |
+|---|---|
+| Email verification code | Expires after five minutes. |
+| Access token | RS256-signed JWT; default lifetime is five minutes. |
+| Refresh token | RS256-signed JWT; default lifetime is seven days. |
+| Login throttling | Repeated failed attempts trigger a temporary sign-in block. |
+| Account status | Suspended accounts cannot use the shared authenticated-session flow. |
 
-<div class="tw-callout-panel">
-  Each audit entry is saved in the <strong>same database transaction</strong> as the change it records. If the change fails, no entry is written, and a change can never be saved without its entry. Entries never contain passwords, tokens or keys.
-</div>
-
----
-
-## Human Decision Boundary
-
-TerraWatch supports decisions; it does not make them. A high-risk prediction creates an alert with the status `PENDING_REVIEW`, and only an analyst can approve, reject or dismiss it. The decision is stored with the reviewer and the time, and the system cannot issue public warnings by itself.
+Keep signing keys, email credentials, and database settings in deployment configuration—not in the source code or browser-facing variables.
 
 ---
 
-## Privacy
+## Permissions and Activity
 
-| Principle | How TerraWatch applies it |
-| :--- | :--- |
-| **Purpose** | Personal data is used only for login, access control, administration, security monitoring and accountability. |
-| **Minimization** | The `users` table holds only name, institutional email, role, account status and timestamps. |
-| **Access** | Only system administrators can see user details. |
-| **Sharing** | Personal data is not shared with third parties without an approved institutional or legal reason. |
-| **Retention** | Account data is kept while the account is active and for 3 months after deactivation, then deleted or anonymized. |
+Administrator and analyst roles are checked by the operations that require them. Review decisions are associated with the signed-in analyst. Alert, review, and incident activity creates audit records that support follow-up and operational accountability.
+
+The audit log is available through `/audit-logs/`. For a user's current permissions, refer to the specific operation and its role requirements in the API documentation.
 
 ---
 
-## Compliance
+## Protecting Data in Deployment
 
-| Standard | How it applies |
-| :--- | :--- |
-| **Rwanda Law No. 058/2021** on personal data and privacy | Collect only what is needed, use it only for its stated purpose, store it in Rwanda, encrypt it and follow the retention periods. A privacy review is done before deployment. |
-| **ISO/IEC 27001** | Guides access control, encryption, audit logging, backups, supplier checks and testing. |
-| **MINEMA and hosting policies** | Reviewed with the MINEMA or hosting cybersecurity team before deployment. |
+Production environments should protect connections and stored data, restrict access to secrets and databases, and maintain tested backups. Before a deployment is used operationally, agree on:
+
+- HTTPS/TLS between users, the frontend, and the API.
+- Encryption and access controls for databases, backups, and stored model files.
+- Backup frequency, retention, recovery ownership, and recovery testing.
+- User-data access, retention, and deletion procedures.
+- Monitoring and response procedures for account or service incidents.
+
+These are deployment responsibilities as well as application concerns. Set them for the environment where TerraWatch will operate and verify them as part of release readiness.
 
 ---
 
-## Security Testing
+## Privacy and Compliance
 
-| Test | What it checks | Tools |
-| :--- | :--- | :--- |
-| Automated tests | Validation, rejected fields, server-owned fields, audit entries and database rules, on every pull request. | pytest |
-| API security testing | Authentication, authorization, input validation, rate limiting and token handling against the OWASP API Security Top 10. | Postman, Burp Suite Community |
-| Dependency scanning | Known vulnerabilities in Python and JavaScript libraries. | pip-audit, npm audit |
-| Data-ingestion testing | Negative rainfall, wrong formats, future dates, duplicates and missing values. | pytest |
+TerraWatch user records support account access and administration. Limit access to authorized personnel and use account information only for approved institutional purposes.
+
+Rwanda's Law No. 058/2021 relating to the protection of personal data and privacy should guide the handling of personal information. ISO/IEC 27001 can inform an information-security management programme. A project reference to a law or standard is not, by itself, a compliance assessment or certification; seek the appropriate institutional and legal review before operational deployment.
+
+---
+
+## Security Checks
+
+Run the backend's automated checks when changing API or account behavior:
+
+```bash
+uv run --no-sync ruff check .
+uv run --no-sync pytest --cov --cov-report=term-missing
+```
+
+For production releases, include security testing of authentication, role permissions, API inputs, dependencies, and deployment configuration. See the [Developer Guide](developer-guide.md) for running the application and its checks.

@@ -18,11 +18,11 @@ hide:
 # System Architecture
 
 <p class="tw-lead-text">
-  TerraWatch Rwanda is built as an integrated landslide-risk intelligence platform. It combines environmental data, machine learning, and analyst workflows to turn data into actionable risk insights for disaster-management decision support.
+  TerraWatch Rwanda connects rainfall data, sector geography, risk assessment, and an analyst workspace to support landslide preparedness and response.
 </p>
 
 <div class="tw-callout-panel">
-  Architecture documentation reflects the current system design. When components, dependencies, or security controls change, <strong>diagrams and sections must be updated</strong> to stay in sync with the implementation.
+  The architecture brings environmental observations into a shared workflow: collect rainfall, estimate risk, and support analyst review.
 </div>
 
 ---
@@ -30,10 +30,12 @@ hide:
 ## System Architecture Diagram
 
 <div class="architecture-diagram">
-  <img src="../assets/images/TerraWatch-System-Architecture-Diagram-by-Codebine.png" alt="TerraWatch Rwanda System Architecture Diagram" style="max-width:100%;height:auto;">
+  <a href="../assets/images/TerraWatch-System-Architecture-Diagram-by-Codebine.png" target="_blank" title="Open the full-size system architecture diagram">
+    <img src="../assets/images/TerraWatch-System-Architecture-Diagram-by-Codebine.png" alt="TerraWatch Rwanda System Architecture Diagram" style="max-width:100%;height:auto;">
+  </a>
 </div>
 
-*Figure 1. TerraWatch Rwanda system architecture overview showing component relationships and data flows.*
+*Figure 1. TerraWatch system design, showing the main components and information flows. The sections below describe the rainfall and prediction workflows.*
 
 ---
 
@@ -42,27 +44,27 @@ hide:
 <div class="tw-feature-microgrid">
   <div class="tw-feature-card">
     <strong>Data Layer</strong>
-    <span>Environmental datasets, historical landslide records, and incoming rainfall data stored across PostgreSQL and Amazon S3.</span>
+    <span>PostgreSQL keeps the sector, rainfall, model, prediction, alert, review, user, and incident records used by TerraWatch.</span>
   </div>
   <div class="tw-feature-card">
     <strong>Data Pipelines</strong>
-    <span>CHIRPS rainfall ingestion, data preparation, feature engineering, and alignment of environmental factors for model training and inference.</span>
+    <span>CHIRPS daily rainfall is retrieved through Google Earth Engine and summarized into rolling 1-, 3-, 7-, 10-, and 30-day sector values.</span>
   </div>
   <div class="tw-feature-card">
     <strong>AI Risk Assessment</strong>
-    <span>Trained landslide-risk model that processes prepared inputs to generate sector-level risk estimates with confidence indicators.</span>
+    <span>Logistic Regression combines recent rainfall and sector characteristics to estimate landslide probability and map it to a risk tier.</span>
   </div>
   <div class="tw-feature-card">
     <strong>Analyst Workspace</strong>
-    <span>Web interface for reviewing alerts, recording decisions, logging field incidents, and visualizing risk on interactive maps.</span>
+    <span>A Next.js and React workspace brings together the risk map, dashboard, alerts, incidents, analytics, and administration tools.</span>
   </div>
   <div class="tw-feature-card">
     <strong>API Layer</strong>
-    <span>RESTful endpoints under <code>/api/v1</code> that connect the frontend, model outputs, and persistent storage with audit logging.</span>
+    <span>FastAPI provides the application endpoints for rainfall, predictions, alerts, reviews, incidents, users, and audit records.</span>
   </div>
   <div class="tw-feature-card">
     <strong>Security & Compliance</strong>
-    <span>Authentication, authorization, audit trails, and security controls that enforce accountability across all system actions.</span>
+    <span>Account sign-in, role-based permissions, request validation, and audit records support responsible use of the workspace.</span>
   </div>
 </div>
 
@@ -75,42 +77,42 @@ hide:
     <div class="tw-step-badge">01</div>
     <div class="tw-step-body">
       <strong>Ingest Environmental Data</strong>
-      <span>Historical datasets (rainfall, slope, land cover, geology, soil, historical landslides) are collected and prepared for model development.</span>
+      <span>Sector characteristics and historical landslide records provide geographic and event context for analysis.</span>
     </div>
   </div>
   <div class="tw-step-node">
     <div class="tw-step-badge">02</div>
     <div class="tw-step-body">
-      <strong>Train & Evaluate Model</strong>
-      <span>Features are engineered from aligned historical events and conditions. The model learns patterns associated with landslides and is evaluated before deployment.</span>
+      <strong>Prepare Risk Assessment</strong>
+      <span>Historical landslide records are paired with environmental observations to train and evaluate the Logistic Regression model.</span>
     </div>
   </div>
   <div class="tw-step-node">
     <div class="tw-step-badge">03</div>
     <div class="tw-step-body">
       <strong>Ingest Incoming Rainfall</strong>
-      <span>CHIRPS rainfall data is retrieved on the configured schedule and stored in Amazon S3 for processing and use in risk assessment.</span>
+      <span>CHIRPS rainfall is retrieved through Google Earth Engine and the resulting sector-level observations are stored in PostgreSQL.</span>
     </div>
   </div>
   <div class="tw-step-node">
     <div class="tw-step-badge">04</div>
     <div class="tw-step-body">
       <strong>Generate Risk Estimates</strong>
-      <span>Prepared inputs are passed to the trained model to produce sector-level risk classifications (LOW/MODERATE/HIGH/EXTREME) for the current conditions.</span>
+      <span>The prediction service selects the latest timestamped observation, builds the estimator-specific feature row, records the inference and feature snapshot, and applies the configured score thresholds.</span>
     </div>
   </div>
   <div class="tw-step-node">
     <div class="tw-step-badge">05</div>
     <div class="tw-step-body">
       <strong>Alert & Review</strong>
-      <span>HIGH or EXTREME predictions trigger alerts in the Analyst Workspace. Analysts review, decide (APPROVE/REJECT/DISMISS), and log field incidents as needed.</span>
+      <span>HIGH and EXTREME inferences can be converted into alerts (HIGH and CRITICAL severities respectively). Reviews use APPROVED, REJECTED, or DISMISSED decisions; incidents are separate records.</span>
     </div>
   </div>
   <div class="tw-step-node">
     <div class="tw-step-badge">06</div>
     <div class="tw-step-body">
       <strong>Record & Audit</strong>
-      <span>All actions are persisted to PostgreSQL and written to the audit log, maintaining a complete record for accountability and traceability.</span>
+      <span>Alert, review, and incident activity is recorded to support traceability across the analyst workflow.</span>
     </div>
   </div>
 </div>
@@ -121,20 +123,24 @@ hide:
 
 <div class="tw-feature-microgrid">
   <div class="tw-feature-card">
-    <strong>Relational Storage</strong>
-    <span><strong>PostgreSQL</strong> — Stores sectors, alerts, reviews, incidents, users, and audit records. Schema and migrations live in the application codebase.</span>
+    <strong>Frontend</strong>
+    <span>Next.js App Router, React, TypeScript, Leaflet/React-Leaflet, and Recharts. The frontend uses <code>NEXT_PUBLIC_API_BASE_URL</code> for backend routing.</span>
   </div>
   <div class="tw-feature-card">
-    <strong>Object Storage</strong>
-    <span><strong>Amazon S3</strong> — Stores incoming CHIRPS rainfall data. Access is configured via environment variables and application credentials.</span>
+    <strong>Backend</strong>
+    <span>Python 3.11+, FastAPI, Pydantic, SQLAlchemy, Alembic, PostgreSQL, and a joblib/scikit-learn inference artifact.</span>
+  </div>
+  <div class="tw-feature-card">
+    <strong>Relational Storage</strong>
+    <span><strong>PostgreSQL</strong> — Stores operational records; the ORM models and Alembic migrations live in the backend repository.</span>
   </div>
   <div class="tw-feature-card">
     <strong>Rainfall Source</strong>
-    <span><strong>CHIRPS</strong> — Climate Hazards Group InfraRed Precipitation with Station data, used as the incoming rainfall feed.</span>
+    <span><strong>CHIRPS via Google Earth Engine</strong> — The integration reads daily rainfall by sector geometry. Required source credentials and dataset configuration are environment settings.</span>
   </div>
   <div class="tw-feature-card">
     <strong>Deployment</strong>
-    <span><strong>Heroku</strong> — Application hosting environment. Note: Heroku hosts the app; Amazon S3 remains an AWS service.</span>
+    <span>The backend and documentation site have separate deployment workflows. See the [Developer Guide](developer-guide.md) for local setup and release references.</span>
   </div>
 </div>
 
@@ -143,25 +149,18 @@ hide:
 ## Security Architecture
 
 <div class="architecture-diagram">
-  <img src="../assets/images/terrawatch-security-sad.png" alt="TerraWatch Rwanda Security Architecture Diagram" style="max-width:100%;height:auto;">
+  <a href="../assets/images/terrawatch-security-sad.png" target="_blank" title="Open the full-size security architecture diagram">
+    <img src="../assets/images/terrawatch-security-sad.png" alt="TerraWatch Rwanda Security Architecture Diagram" style="max-width:100%;height:auto;">
+  </a>
 </div>
 
-*Figure 2. TerraWatch Rwanda security architecture showing security boundaries and controls.*
+*Figure 2. TerraWatch security design, showing the intended account, application, and data layers. See [Security & Compliance](security-compliance.md) for account controls and deployment practices.*
 
-<div class="tw-feature-microgrid">
-  <div class="tw-feature-card">
-    <strong>Authentication & Access</strong>
-    <span>Role-based access ensures only authorized analysts can review alerts, make decisions, and log incidents.</span>
-  </div>
-  <div class="tw-feature-card">
-    <strong>Auditability</strong>
-    <span>Every alert, review, and incident is written to the audit log with user identity and timestamp.</span>
-  </div>
-  <div class="tw-feature-card">
-    <strong>Secure Boundaries</strong>
-    <span>Data flows are constrained by service boundaries with controlled access between components and external services.</span>
-  </div>
-</div>
+Authentication, role permissions, and activity records support the analyst workflow. See [Security & Compliance](security-compliance.md) for account controls and deployment practices.
+
+## Service Routes
+
+The API groups operational resources under `/api/v1/`, authentication and users under `/auth/` and `/users/`, model and inference operations under `/analytics/`, and audit records under `/audit-logs/`. See the [API reference](analyst-workspace.md#api-reference) for endpoints and the [Technical Reference](technical-reference.md) for code links.
 
 ---
 

@@ -9,6 +9,48 @@
   --tw-gradient: linear-gradient(135deg, #163B32 0%, #8EB69B 50%, #F7931E 100%);
 }
 
+[data-md-color-scheme="default"] .md-typeset a:not(.md-button):not(.tw-card):not(.headerlink) {
+  color: #145B43 !important;
+  text-decoration: underline;
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.16em;
+}
+
+[data-md-color-scheme="slate"] .md-typeset a:not(.md-button):not(.tw-card):not(.headerlink) {
+  color: #FFB454 !important;
+  text-decoration: underline;
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.16em;
+}
+
+[data-md-color-scheme="default"] .md-typeset a code {
+  color: #145B43 !important;
+}
+
+[data-md-color-scheme="slate"] .md-typeset a code {
+  color: #FFB454 !important;
+}
+
+[data-md-color-scheme="default"] .md-typeset a:not(.md-button):not(.tw-card):not(.headerlink):hover,
+[data-md-color-scheme="default"] .md-typeset a:not(.md-button):not(.tw-card):not(.headerlink):focus-visible {
+  color: #8A3B00 !important;
+}
+
+[data-md-color-scheme="default"] .md-typeset a:hover code,
+[data-md-color-scheme="default"] .md-typeset a:focus-visible code {
+  color: #8A3B00 !important;
+}
+
+[data-md-color-scheme="slate"] .md-typeset a:not(.md-button):not(.tw-card):not(.headerlink):hover,
+[data-md-color-scheme="slate"] .md-typeset a:not(.md-button):not(.tw-card):not(.headerlink):focus-visible {
+  color: #FFD18A !important;
+}
+
+[data-md-color-scheme="slate"] .md-typeset a:hover code,
+[data-md-color-scheme="slate"] .md-typeset a:focus-visible code {
+  color: #FFD18A !important;
+}
+
 .md-palette--custom-primary {
   --md-primary-fg-color: #163B32;
   --md-primary-fg-color--light: #8EB69B;
@@ -22,12 +64,16 @@
 /* ==========================================================================
    2. FIXED SIDEBARS & TEXT WRAPPING (For inner pages)
    ========================================================================= */
-.md-sidebar {
-  width: 14rem !important;
+@media screen and (min-width: 76.25em) {
+  .md-sidebar {
+    width: 14rem !important;
+  }
 }
 
-.md-sidebar--secondary {
-  width: 16rem !important;
+@media screen and (min-width: 60em) {
+  .md-sidebar--secondary {
+    width: 16rem !important;
+  }
 }
 
 .md-nav__link {
@@ -157,7 +203,7 @@ body {
    ========================================================================= */
 .tw-card-wrap {
   position: relative !important;
-  z-index: 5 !important;
+  z-index: 1 !important;
   width: 100% !important;
   max-width: 1200px !important;
   margin-top: 1.5rem !important;
@@ -185,16 +231,15 @@ body {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2) !important;
 }
 
-/* FIXED: Scale up your brand emblem inside the header grid panel */
+/* Keep the brand mark within the standard header height. */
 .md-header__button.md-logo img,
 .md-header__button.md-logo svg {
-  height: 3.5rem !important;
+  height: 1.6rem !important;
   width: auto !important;
 }
 
 .md-header__button.md-logo {
-  padding: 0.25rem !important;
-  margin-right: 1rem !important;
+  margin-right: 0.25rem !important;
 }
 
 .tw-home-inner .md-button--primary {
@@ -226,6 +271,10 @@ body {
    7. MOBILE RESPONSIF ADJUSTMENTS (< 960px Viewports)
    ========================================================================= */
 @media (max-width: 959.5px) {
+  .md-tabs {
+    overflow-x: auto;
+  }
+
   .tw-home {
     padding-top: 2rem !important;
     padding-bottom: 4rem !important;
@@ -687,9 +736,23 @@ body {
 }
 
 @media screen and (max-width: 600px) {
+  .md-header__title {
+    min-width: 0;
+    margin-left: 0.35rem !important;
+    font-size: 0.82rem;
+  }
+
+  .md-header__topic:first-child .md-ellipsis {
+    font-size: 0;
+  }
+
+  .md-header__topic:first-child .md-ellipsis::after {
+    content: "TerraWatch";
+    font-size: 0.9rem;
+  }
+
   .md-typeset .grid.cards > ul,
   .md-typeset .grid.cards > ol {
     grid-template-columns: 1fr;
   }
 }
-
