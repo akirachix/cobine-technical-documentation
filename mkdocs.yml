@@ -25,16 +25,10 @@ theme:
       scheme: default
       primary: custom-primary
       accent: custom-accent
-      toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       primary: custom-primary
       accent: custom-accent
-      toggle:
-        icon: material/brightness-4
-        name: Switch to light mode
   font:
     text: Roboto
     code: Roboto Mono
@@ -42,6 +36,7 @@ theme:
 markdown_extensions:
   - admonition
   - attr_list
+  - md_in_html
   - tables
   - toc:
       permalink: true
@@ -64,16 +59,6 @@ nav:
   - AI Risk Assessment: ai-risk-assessment.md
   - Analyst Workspace: analyst-workspace.md
   - Security & Compliance: security-compliance.md
+  - Developer Guide: developer-guide.md
+  - Technical Reference: technical-reference.md
   - Glossary: glossary.md
-  
-markdown_extensions:
-  - admonition
-  - attr_list
-  - md_in_html
-  - tables
-  - toc:
-      permalink: true
-  - pymdownx.details
-  - pymdownx.highlight
-  - pymdownx.superfences
-  - pymdownx.tabbed

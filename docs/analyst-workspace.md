@@ -22,7 +22,7 @@ hide:
 </p>
 
 <div class="tw-callout-panel">
-  The workspace supports decisions; it does not make them. A model output is a <strong>risk estimate</strong>, not an official warning. Every alert waits for an analyst's decision, and every decision is recorded with the analyst's name and the time.
+  The workspace supports decisions; it does not make them. A model output is a <strong>risk estimate</strong>, not an official warning.
 </div>
 
 ---
@@ -31,6 +31,8 @@ hide:
 
 [![TerraWatch analyst dashboard](assets/images/terrawatch-analyst-dashboard.png)](assets/images/terrawatch-analyst-dashboard.png){ target="_blank" title="Open the full-size image" }
 
+The dashboard brings sector information, recent alerts, and incident reports together for an analyst's daily review.
+
 <div class="tw-feature-microgrid">
   <div class="tw-feature-card">
     <strong>📊 Summary Cards</strong>
@@ -38,11 +40,11 @@ hide:
   </div>
   <div class="tw-feature-card">
     <strong>🗺️ Risk Map</strong>
-    <span>Sectors coloured by risk level, with a legend filter, a search box and map, satellite and terrain views.</span>
+    <span>Explore sectors with map navigation, search, and risk filters.</span>
   </div>
   <div class="tw-feature-card">
     <strong>📍 Sector Overview</strong>
-    <span>The selected sector's risk level, 7-day rainfall, average slope and past landslides.</span>
+    <span>Review sector risk, rainfall, slope, and incident information.</span>
   </div>
   <div class="tw-feature-card">
     <strong>🚨 Recent Alerts</strong>
@@ -63,7 +65,7 @@ hide:
     <div class="tw-step-badge">01</div>
     <div class="tw-step-body">
       <strong>Monitor</strong>
-      <span>Open the risk map and check which sectors show High or Critical risk after the latest rainfall update.</span>
+      <span>Open the risk map and review sectors with HIGH or EXTREME estimates.</span>
     </div>
   </div>
   <div class="tw-step-node">
@@ -84,7 +86,7 @@ hide:
     <div class="tw-step-badge">04</div>
     <div class="tw-step-body">
       <strong>Log</strong>
-      <span>Record landslides reported from the field so the event history stays complete.</span>
+      <span>Record landslides reported from the field for operational follow-up.</span>
     </div>
   </div>
 </div>
@@ -127,7 +129,7 @@ A review is the analyst's recorded decision on an alert or on a prediction.
 
 ## Incident Reports
 
-Analysts log landslides reported from the field so TerraWatch keeps a complete record of real events.
+Analysts can record field-reported landslides. These reports are operational incident records; a report is not necessarily independently verified ground truth.
 
 <div class="tw-step-grid">
   <div class="tw-step-node">
@@ -155,7 +157,7 @@ Analysts log landslides reported from the field so TerraWatch keeps a complete r
     <div class="tw-step-badge">04</div>
     <div class="tw-step-body">
       <strong>Submit</strong>
-      <span>The report appears at the top of the incidents table. The reporter and the time received are added by the system.</span>
+      <span>The report appears in the incidents table with its event details and received timestamp.</span>
     </div>
   </div>
 </div>
@@ -164,24 +166,39 @@ Analysts log landslides reported from the field so TerraWatch keeps a complete r
 
 ## API Reference
 
-All paths start with `/api/v1`. Every alert, review and incident is also written to the audit log; see [Security & Compliance](security-compliance.md).
+The API groups routes by workflow: resource routes use `/api/v1`, model and inference routes use `/analytics`, and sign-in routes use `/auth`. See [Security & Compliance](security-compliance.md) for user roles and account access.
 
 | Method | Endpoint | Purpose |
 | :--- | :--- | :--- |
-| `GET` | `/sectors` | List sectors for the map and the district and sector pickers |
-| `POST` | `/alerts` | Raise an alert from a HIGH or EXTREME prediction |
-| `GET` | `/alerts` | List alerts, newest first, with an optional `alert_status` filter |
-| `GET` | `/alerts/{alert_id}` | Get one alert |
-| `POST` | `/reviews` | Record a decision on an alert or a prediction |
-| `GET` | `/reviews` | List reviews, newest first |
-| `POST` | `/incidents` | Log a field incident |
-| `GET` | `/incidents` | List incident reports, newest first |
-| `GET` | `/incidents/{report_id}` | Get one incident report |
+| `GET` | `/api/v1/sectors` | List sectors; supports province/district filters and pagination |
+| `POST` | `/api/v1/alerts` | Create an alert from an `inference_id`; only HIGH/EXTREME predictions are accepted |
+| `GET` | `/api/v1/alerts` | List alerts, optionally filtered by `alert_status`, with `limit` and `offset` |
+| `GET` | `/api/v1/alerts/{alert_id}` | Get one alert |
+| `POST` | `/api/v1/reviews` | Record a decision on an alert or inference; authenticated reviewer is recorded |
+| `GET` | `/api/v1/reviews` | List reviews, optionally filtered by alert or inference |
+| `POST` | `/api/v1/incidents` | Create a report using `sector_id`, `event_date`, and `description` |
+| `GET` | `/api/v1/incidents` | List incident reports with `limit` and `offset` |
+| `GET` | `/api/v1/incidents/{report_id}` | Get one incident report |
+| `POST` | `/analytics/models/{model_version_id}/predict-from-rainfall` | Run inference from a sector and timestamped rainfall observations |
+| `POST` | `/analytics/inferences` | Record an already-calculated inference; this endpoint does not itself run the model |
+| `GET` | `/analytics/inferences/{inference_id}` | Retrieve a stored inference |
+| `POST` | `/api/v1/rainfall/sync` | Sync CHIRPS daily data for an optional sector/date range |
+| `GET` | `/api/v1/rainfall/status` | Read sync status; optional `include_chirps=true` queries the source |
 
 | Code | Meaning |
 | :--- | :--- |
 | `201` | The alert, review or incident was created. |
-| `401` | The user is not logged in, or the account is suspended. |
+| `400` | A request cannot be processed, such as a missing/invalid inference input or referenced sector. |
+| `401` | Authentication is missing or invalid on a route that requires it. |
+| `403` | A route-level role or account check denies the operation. |
 | `404` | The alert, prediction or report does not exist. |
 | `409` | An alert already exists for the prediction, or the alert was already reviewed. |
-| `422` | The request is invalid, for example a missing or unknown field, a future event date or an unknown sector. |
+| `422` | Request validation failed, such as a future incident date or unsupported alert risk level. |
+
+### Request and response notes
+
+- `POST /api/v1/alerts` accepts only `{ "inference_id": "UUID" }`; severity, message, and pending-review status are derived by the backend.
+- `POST /api/v1/reviews` accepts `alert_id` or `inference_id` (exactly one), a decision (`APPROVED`, `REJECTED`, or `DISMISSED`), and optional comments up to 2,000 characters.
+- `POST /api/v1/incidents` requires a timezone-aware, non-future `event_date`, a known `sector_id`, and a non-empty description up to 2,000 characters.
+- The inference request/response example and threshold mapping are documented in [AI Risk Assessment](ai-risk-assessment.md).
+- For source links and route groups, see the [Technical Reference](technical-reference.md#application-repositories).

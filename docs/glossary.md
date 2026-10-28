@@ -18,7 +18,7 @@ A reference for acronyms and domain terms used throughout the TerraWatch Rwanda 
 | **CHIRPS** | Climate Hazards Group InfraRed Precipitation with Station | Near real-time rainfall dataset used as the primary precipitation feed. |
 | **GIS** | Geographic Information System | Systems and tools used for capturing, storing, checking, and displaying spatial data. |
 | **HTTPS** | HyperText Transfer Protocol Secure | The secure version of HTTP, used for all traffic between clients and the platform. |
-| **MINEMA** | Ministry of Environment (Rwanda) | The Rwandan government ministry responsible for disaster management and environmental monitoring. MINEMA analysts are the primary users of TerraWatch. |
+| **MINEMA** | Ministry in Charge of Emergency Management (Rwanda) | The institution identified in the project materials as the primary disaster-management stakeholder. |
 | **OWASP** | Open Worldwide Application Security Project | A nonprofit foundation that produces security checklists and tools; the API security testing follows the OWASP API Security Top 10. |
 | **REST / RESTful** | Representational State Transfer | An architectural style for designing networked applications; the platform exposes RESTful API endpoints. |
 | **RBAC** | Role-Based Access Control | A permission model where access rights are assigned to users based on their role within the organization. |
@@ -33,15 +33,15 @@ A reference for acronyms and domain terms used throughout the TerraWatch Rwanda 
 |---|---|
 | **Alert** | A notification generated when a sector's risk exceeds a predefined threshold (HIGH or EXTREME). Alerts appear in the Analyst Workspace review queue. |
 | **Analyst** | A disaster-management analyst, typically from MINEMA, who reviews risk estimates, investigates alerts, makes decisions, and logs field incidents. |
-| **Confidence Score** | A numerical or categorical value indicating how certain the ML model is about its risk classification for a given sector. |
-| **Critical Risk** | The highest risk level, used when landslide likelihood and potential impact are at their most severe. |
+| **Confidence** | A measure of certainty or evidence quality. TerraWatch's probability score represents estimated landslide risk, not a separate confidence measure. |
+| **Critical** | Alert severity assigned by the backend to an `EXTREME` risk inference. It is not a fifth risk-level tier. |
 | **District** | An administrative division in Rwanda; districts contain multiple sectors. |
 | **Geospatial** | Relating to or denoting geographical information that has embedded spatial coordinates. |
 | **High Risk** | A risk level indicating significant landslide likelihood requiring analyst attention. |
-| **Incident** | A confirmed landslide event recorded by an analyst, including location, severity, timing, and supporting evidence. |
+| **Incident report** | A field-reported landslide event recorded with its location, severity, timing, and supporting details. |
 | **Low Risk** | The lowest risk level, indicating minimal landslide likelihood. |
 | **Moderate Risk** | A risk level above low but below high, indicating moderate landslide likelihood. |
-| **Model** | The trained Random Forest classifier that processes environmental conditions and produces sector-level risk classifications. |
-| **Risk Assessment** | The process of evaluating environmental conditions and assigning a risk classification (Low, Moderate, High, Critical) to each monitored sector. |
+| **Model** | A serialized estimator registered through a model-version record. The backend inference service calls `predict_proba`; the exact estimator type and training lineage must be confirmed for each artifact. |
+| **Risk Assessment** | The process of calculating a probability-based `risk_score` and mapping it to LOW, MODERATE, HIGH, or EXTREME for a sector. |
 | **Sector** | The smallest administrative division in Rwanda used by TerraWatch for landslide risk monitoring. |
 | **Trace** | To trace the origin and decision path of a risk estimate; the audit trail maintains a complete record for accountability. |

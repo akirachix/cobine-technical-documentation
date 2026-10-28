@@ -31,7 +31,7 @@ hide:
         <div class="tw-card-icon">D</div><strong>Data Pipelines</strong><span>Rainfall, terrain, and landslide ingestion and storage.</span>
       </a>
       <a class="tw-card" href="ai-risk-assessment/">
-        <div class="tw-card-icon">AI</div><strong>AI Risk Assessment</strong><span>Random Forest classification, confidence, and explanations.</span>
+        <div class="tw-card-icon">AI</div><strong>AI Risk Assessment</strong><span>How rainfall becomes a risk estimate, with model inputs and thresholds.</span>
       </a>
       <a class="tw-card" href="analyst-workspace/">
         <div class="tw-card-icon">W</div><strong>Analyst Workspace</strong><span>Risk map, alerts, incidents, and operational learning.</span>
@@ -64,116 +64,86 @@ hide:
       Although meteorological observations, satellite rainfall data, disaster-management institutions, and historical hazard information already exist, risk information is often fragmented across different systems, datasets, and organizations. As a result, emerging threats may not be identified quickly, evidence may be difficult to interpret, and decision-makers may lack geographic context.
     </p>
     <p class="tw-section-text tw-text-highlight">
-      TerraWatch bridges the gap between environmental evidence and disaster-management decision making by continuously evaluating environmental conditions and highlighting locations requiring attention.
+      TerraWatch brings environmental evidence and sector-level risk estimates into a shared workspace where analysts can review locations requiring attention.
     </p>
   </div>
 </section>
 
-<!-- PRODUCT GOALS SECTION (Styled Timeline/Process Track */ -->
+<!-- TERRAWATCH WORKFLOW -->
 <section class="tw-section tw-section-alt">
   <div class="tw-section-container">
-    <div class="tw-section-eyebrow">Strategic Roadmap</div>
-    <h2 class="tw-section-heading">Product Goals</h2>
+    <div class="tw-section-eyebrow">The TerraWatch Workflow</div>
+    <h2 class="tw-section-heading">From Rainfall to Review</h2>
+    <p class="tw-section-text">TerraWatch brings together changing rainfall conditions, sector-level risk estimates, and the people responsible for deciding what happens next.</p>
     
     <div class="tw-goals-timeline">
       <div class="tw-timeline-item">
         <div class="tw-timeline-num">01</div>
         <div class="tw-timeline-content">
-          <strong>Information Continuity</strong>
-          <span> geospatial cataloging, polygon registration, timeline analysis, and change-alert handling.</span>
+          <strong>Follow Rainfall</strong>
+          <span>Review CHIRPS rainfall observations summarized across recent time windows.</span>
         </div>
       </div>
       <div class="tw-timeline-item">
         <div class="tw-timeline-num">02</div>
         <div class="tw-timeline-content">
-          <strong>Anomaly Recognition</strong>
-          <span>Support earlier recognition of environmental anomalies during automated observation schedules.</span>
+          <strong>Assess Sector Risk</strong>
+          <span>Use rainfall and sector characteristics to estimate landslide probability.</span>
         </div>
       </div>
       <div class="tw-timeline-item">
         <div class="tw-timeline-num">03</div>
         <div class="tw-timeline-content">
-          <strong>Targeted Intervention</strong>
-          <span>Drive appropriate intervention strategies instead of simply displaying raw map overlays.</span>
+          <strong>Focus Attention</strong>
+          <span>Bring sector information and risk estimates into the analyst workspace.</span>
         </div>
       </div>
       <div class="tw-timeline-item">
         <div class="tw-timeline-num">04</div>
         <div class="tw-timeline-content">
-          <strong>Reduced Fragmentation</strong>
-          <span>Deliver highly structured, lightweight vector alerts and payload reports.</span>
+          <strong>Review and Record</strong>
+          <span>Manage alerts, capture decisions, and record incidents in one workflow.</span>
         </div>
       </div>
       <div class="tw-timeline-item">
         <div class="tw-timeline-num">05</div>
         <div class="tw-timeline-content">
-          <strong>Data Protection</strong>
-          <span>Strict multi-tier permissions, spatial access boundary logic, and thorough audit trails.</span>
-        </div>
-      </div>
-      <div class="tw-timeline-item">
-        <div class="tw-timeline-num">06</div>
-        <div class="tw-timeline-content">
-          <strong>Team Accountability</strong>
-          <span>Create team operational accountability through organizational administrative workflows.</span>
-        </div>
-      </div>
-      <div class="tw-timeline-item">
-        <div class="tw-timeline-num">07</div>
-        <div class="tw-timeline-content">
-          <strong>High Usability</strong>
-          <span>Performant spatial load handling via edge-optimized compression and tileset tiling.</span>
-        </div>
-      </div>
-      <div class="tw-timeline-item">
-        <div class="tw-timeline-num">08</div>
-        <div class="tw-timeline-content">
-          <strong>Decision Boundary</strong>
-          <span>Keep AI within a supportive decision boundary rather than absolute autonomous verdicts.</span>
+          <strong>Keep People in Control</strong>
+          <span>Use estimates to inform institutional judgement, never as a substitute for it.</span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SYSTEM SCOPE SECTION (Side-by-Side Split Grid) */ -->
+<!-- DECISION SUPPORT -->
 <section class="tw-section">
   <div class="tw-section-container">
-    <div class="tw-section-eyebrow">Project Guardrails</div>
-    <h2 class="tw-section-heading">System Scope</h2>
+    <div class="tw-section-eyebrow">Built for Disaster-Management Teams</div>
+    <h2 class="tw-section-heading">A Shared Operational Picture</h2>
     
     <div class="tw-scope-split">
-      <!-- In Scope Box -->
       <div class="tw-scope-box tw-scope-in">
-        <h3>In Scope</h3>
+        <h3>Bring Together</h3>
         <ul>
-          <li>Analyst-centric geospatial boundaries</li>
-          <li>Target monitoring areas & custom polygon records</li>
-          <li>Regional visual history timelines</li>
-          <li>Automated change-detection risk levels</li>
-          <li>Alert notifications & intervention payloads</li>
-          <li>Identity verification & platform security bounds</li>
-          <li>Explicit spatial permission structures</li>
-          <li>Multi-tiered tenant routing</li>
-          <li>Comprehensive structural system audit loops</li>
-          <li>Secure geospatial vector asset uploads</li>
-          <li>Strategic analytical engine integrations</li>
-          <li>Performant client web dashboards</li>
-          <li>Scalable central processing APIs and storage backends</li>
+          <li>Rainfall observations and sector context</li>
+          <li>Probability-based landslide-risk estimates</li>
+          <li>Alerts, reviews, and incident records</li>
+          <li>Analyst and administrator workflows</li>
         </ul>
       </div>
       
-      <!-- Out of Scope Box -->
-      <div class="tw-scope-box tw-scope-out">
-        <h3>Out of Scope</h3>
+      <div class="tw-scope-box tw-scope-in">
+        <h3>Support</h3>
         <ul>
-          <li>Legally claim or resolve cross-border land disputes</li>
-          <li>Dictate regional environmental enforcement policies independently</li>
-          <li>Guarantee real-time sub-meter video coverage under cloud obscuration</li>
-          <li>Directly execute on-the-ground physical cleanups</li>
-          <li>Solve systemic hardware satellite launch or orbital degradation delays</li>
+          <li>Compare conditions across sectors</li>
+          <li>Direct analyst attention to emerging risk</li>
+          <li>Keep a record of review decisions</li>
+          <li>Coordinate institutional follow-up</li>
         </ul>
       </div>
     </div>
   </div>
 </section>
+
+<p class="tw-section-text">Explore the <a href="overview/">platform overview</a>, <a href="architecture/">system architecture</a>, <a href="ai-risk-assessment/">risk assessment</a>, or <a href="analyst-workspace/">analyst workspace</a>.</p>

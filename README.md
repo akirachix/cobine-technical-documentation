@@ -4,28 +4,30 @@
 
 TerraWatch Rwanda is a geospatial intelligence platform that continuously monitors environmental conditions across Rwanda to identify areas showing elevated landslide risk. Built for disaster-management analysts at MINEMA and district-level offices, the platform bridges the gap between fragmented environmental data sources and actionable, geographically specific decision-making.
 
+This repository contains the documentation site. The application is maintained in the [backend](https://github.com/akirachix/codebine-backend) and [frontend](https://github.com/akirachix/cobine-frontend) repositories.
+
+Start with the [platform overview](docs/overview.md), explore the [system architecture](docs/architecture.md), or jump to the [developer guide](docs/developer-guide.md).
+
 ---
 
 ## Key Capabilities
 
 | Capability | Description |
 |---|---|
-| **Risk Map Visualization** | View landslide risk classified into Low, Moderate, High, and Critical zones across Rwanda by sector or district. |
-| **ML Risk Assessment** | A Random Forest classifier evaluates environmental conditions and produces risk classifications with confidence scores. |
-| **Alert Management** | Automated alerts are generated, organized, prioritized, and tracked through an auditable review workflow. |
-| **Incident Logging** | Record confirmed landslide events with location, severity, timing, and supporting evidence for future learning. |
-| **Data Quality Tracking** | Continuously assess dataset freshness, completeness, and geographic coverage. |
-| **Audit Trail** | Maintain a complete, timestamped history of assessments, alerts, reviews, decisions, and incidents. |
+| **Risk Assessment** | Logistic Regression estimates landslide probability and maps the score to a risk level for a sector. |
+| **Rainfall Data** | CHIRPS daily rainfall is retrieved through Google Earth Engine and summarized into rolling sector-level windows. |
+| **Analyst Workflow** | Review risk estimates, manage alerts, record decisions, and report incidents in the analyst workspace. |
+| **Operational Records** | Rainfall, model versions, predictions, alerts, reviews, incidents, and related activity are stored for the workflow. |
 
 ---
 
 ## How It Works
 
-1. **Collect** - Automatically retrieve rainfall observations, terrain/elevation data, and historical landslide records linked to geographic locations.
-2. **Assess** - The Random Forest classifier evaluates each monitored area, producing a risk classification and an independent confidence score.
-3. **Alert** - When risk thresholds are exceeded, a new alert is generated and queued for analyst review.
-4. **Review** - Analysts review evidence, record observations, and determine whether further action is required.
-5. **Learn** - The platform compares predictions against real-world incidents, identifies false alarms and missed events, and supports continuous model improvement.
+1. **Collect** - Retrieve CHIRPS daily rainfall for sector geometries through Google Earth Engine and prepare rolling time windows.
+2. **Assess** - Use rainfall and sector features to estimate a probability-based risk score and risk level.
+3. **Alert** - Bring locations requiring attention into the analyst workflow.
+4. **Review** - Analysts consider the estimate alongside current conditions, record observations, and decide whether further action is needed.
+5. **Record** - Store predictions, reviews, and incidents to support operational follow-up.
 
 ---
 
@@ -39,11 +41,13 @@ terrawatch-rwanda-docs/
 ├── docs/
 │   ├── index.md              # Homepage (hero, cards, problem statement, scope)
 │   ├── overview.md           # Platform overview, features, target users
-│   ├── architecture.md       # Platform architecture (to be documented)
-│   ├── data-pipelines.md     # Data ingestion and storage (to be documented)
-│   ├── ai-risk-assessment.md # ML models and risk scoring (to be documented)
-│   ├── analyst-workspace.md  # Workspace UI and workflows (to be documented)
-│   ├── security-compliance.md # Security and compliance (to be documented)
+│   ├── architecture.md       # System components, data flow, tech stack, security architecture
+│   ├── data-pipelines.md     # Data ingestion, feature engineering, model training/inference
+│   ├── ai-risk-assessment.md # ML model, risk levels, features, API reference
+│   ├── analyst-workspace.md  # Workspace UI, alerts, reviews, incidents, API reference
+│   ├── security-compliance.md # Accounts, roles, privacy, and secure deployment
+│   ├── developer-guide.md   # Setup, run, test, and maintain the application repositories
+│   ├── technical-reference.md # System components, application routes, source links
 │   ├── glossary.md           # Domain terms and acronyms
 │   └── assets/
 │       ├── images/           # Logos, diagrams, screenshots
@@ -85,17 +89,21 @@ The site will be available at `http://localhost:8000`.
 mkdocs build --strict
 ```
 
-The built site is output to the `site/` directory (git-ignored).
+The build checks navigation and links, then writes the site to the git-ignored `site/` directory.
+
+For application setup and checks, see the [Developer Guide](docs/developer-guide.md). The [Technical Reference](docs/technical-reference.md) links the main services and API route groups.
 
 ---
 
 ## Deployment
 
-This project is deployed to **GitHub Pages** via a GitHub Actions workflow (`.github/workflows/deploy.yml`).
+The **documentation site** is deployed to GitHub Pages via a GitHub Actions workflow (`.github/workflows/deploy.yml`). This is separate from application deployment.
 
 - **Trigger:** On every push to `main`, or manually via `workflow_dispatch`
 - **Process:** The workflow installs dependencies, builds the site in strict mode, uploads the artifact, and deploys to GitHub Pages
 - **Environment:** `github-pages`
+
+The backend repository includes a Heroku deployment workflow. Application release details are maintained in the [backend](https://github.com/akirachix/codebine-backend) and [frontend](https://github.com/akirachix/cobine-frontend) repositories.
 
 ---
 
@@ -113,3 +121,5 @@ This project is deployed to **GitHub Pages** via a GitHub Actions workflow (`.gi
 ## License
 
 Internal technical documentation for the TerraWatch Rwanda project.
+
+> TerraWatch provides decision support. Official warnings and response decisions remain with the responsible authorities.

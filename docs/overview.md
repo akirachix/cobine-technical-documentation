@@ -6,11 +6,11 @@ hide:
 # Overview
 
 <p class="tw-lead-text">
-  TerraWatch Rwanda is a landslide-risk intelligence platform that enables disaster-management analysts to continuously monitor environmental conditions, identify areas showing elevated landslide risk, understand why risk is increasing, and maintain a traceable record of decisions and outcomes.
+  TerraWatch Rwanda helps disaster-management teams bring rainfall information and landslide-risk estimates into one sector-focused workspace. Analysts can review risk, manage alerts, and record incidents to support timely, informed decisions.
 </p>
 
 <div class="tw-callout-panel">
-  The platform combines near real-time rainfall observations, terrain susceptibility information, historical landslide data, machine-learning risk assessment, and AI-powered explanations into a single geospatial intelligence workspace.
+  TerraWatch is a decision-support tool: its risk estimates inform analyst review and do not replace official warnings or decisions.
 </div>
 
 ---
@@ -22,21 +22,21 @@ hide:
     <div class="tw-step-badge">01</div>
     <div class="tw-step-body">
       <strong>Collect</strong>
-      <span>Automatically retrieve rainfall observations, import terrain and elevation information, and synchronize historical landslide records linked to geographic locations.</span>
+      <span>Bring sector-level rainfall observations and relevant geographic information together for review.</span>
     </div>
   </div>
   <div class="tw-step-node">
     <div class="tw-step-badge">02</div>
     <div class="tw-step-body">
       <strong>Assess</strong>
-      <span>A Random Forest classifier evaluates each monitored geographic area and produces a risk classification and an independent confidence score.</span>
+      <span>A Logistic Regression model estimates landslide probability from recent rainfall and sector features, then maps the result to a risk level.</span>
     </div>
   </div>
   <div class="tw-step-node">
     <div class="tw-step-badge">03</div>
     <div class="tw-step-body">
       <strong>Alert</strong>
-      <span>When predefined risk thresholds are exceeded, a new alert is generated and added to the analyst's review queue.</span>
+      <span>Analysts create and prioritize alerts for locations that need attention.</span>
     </div>
   </div>
   <div class="tw-step-node">
@@ -50,7 +50,7 @@ hide:
     <div class="tw-step-badge">05</div>
     <div class="tw-step-body">
       <strong>Learn</strong>
-      <span>The platform continuously compares risk predictions against real-world incidents, identifies false alarms and missed events, and supports continuous model improvement.</span>
+      <span>Prediction, review, and incident records give teams a shared history of their work.</span>
     </div>
   </div>
 </div>
@@ -62,31 +62,31 @@ hide:
 <div class="tw-feature-microgrid">
   <div class="tw-feature-card">
     <strong>🗺️ Geographic Risk Map</strong>
-    <span>Visualize landslide risk geographically across Rwanda by sector or district.</span>
+    <span>Explore sector-level rainfall information and landslide-risk estimates.</span>
   </div>
   <div class="tw-feature-card">
     <strong>🤖 ML Risk Assessment</strong>
-    <span>Automatically analyze environmental conditions to classify areas into Low, Moderate, High, or Critical risk.</span>
+    <span>View a probability-based estimate and its LOW, MODERATE, HIGH, or EXTREME risk level.</span>
   </div>
   <div class="tw-feature-card">
     <strong>🚨 Alert Management</strong>
-    <span>Automatically generate, organize, prioritize, and track alerts through an auditable review workflow.</span>
+    <span>Organize alerts, record review decisions, and keep attention focused on emerging risk.</span>
   </div>
   <div class="tw-feature-card">
     <strong>📝 Incident Logging</strong>
-    <span>Record confirmed landslide events with location, severity, timing, and supporting evidence.</span>
+    <span>Record landslide incidents with location, severity, timing, and supporting details.</span>
   </div>
   <div class="tw-feature-card">
     <strong>📊 Data Quality Tracking</strong>
-    <span>Continuously assess dataset freshness, completeness, and geographic coverage.</span>
+    <span>Follow rainfall synchronization and dataset records used by the platform.</span>
   </div>
   <div class="tw-feature-card">
     <strong>📈 Analytics Dashboard</strong>
-    <span>Analyze system performance, environmental trends, alert activity, and model effectiveness.</span>
+    <span>Bring together risk, alert, and incident information for operational review.</span>
   </div>
   <div class="tw-feature-card">
     <strong>🔒 Audit Trail</strong>
-    <span>Maintain a complete, timestamped history of risk assessments, alerts, reviews, decisions, and incidents.</span>
+    <span>Keep a record of key workflow actions and decisions.</span>
   </div>
 </div>
 
@@ -94,9 +94,16 @@ hide:
 
 ## Target Users
 
-| User | Role | Engagement |
-| :--- | :--- | :--- |
-| **Disaster Management Analysts (MINEMA)** | Review and investigate risk assessments | Requires geographic dashboard and evidence visualization |
-| **District Disaster Offices** | Local risk monitoring | Requires district-level visibility |
-| **Meteo Rwanda** | Weather data provider | Provides rainfall information used by the system |
-| **System Administrators** | Manage platform operations | Requires RBAC and monitoring |
+| User | Role |
+| :--- | :--- |
+| **MINEMA analysts** | Review risk estimates, alerts, and incident information. |
+| **District disaster-management teams** | Use sector-level information to support local coordination. |
+| **System administrators** | Manage platform users and operations. |
+
+---
+
+## Decision Support
+
+TerraWatch brings environmental information and risk estimates into an analyst workflow. Official warnings and response decisions remain with the responsible authorities.
+
+For the [system architecture](architecture.md), [risk assessment](ai-risk-assessment.md), [analyst workflow](analyst-workspace.md), and [developer setup](developer-guide.md), continue to the relevant guide.
